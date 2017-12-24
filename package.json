@@ -1,0 +1,29 @@
+{
+  "name": "wct",
+  "version": "1.0.1",
+  "description": "local project management tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "custom project",
+    "upload ,download and link local projects"
+  ],
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "exec-series": "^1.0.3",
+    "fs-extra": "^3.0.1",
+    "request": "^2.81.0",
+    "step": "^1.0.0"
+  },
+  "author": "kog-7",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kog-7/wct.git"
+  },
+  "bin": {
+    "wct": "indexBin.js"
+  }
+}
