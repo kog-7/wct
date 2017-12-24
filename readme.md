@@ -1,7 +1,7 @@
 #   wct   #
 
 wct是本地项目文件的管理工具，指定一个本地项目文件夹，可以进行上载，下载，link等操作，同时也可以根据自己的需求去定制项目。主要用于项目的前期开发，功能组件存档，配置文件存档。mac,windows,linus可用
-![](https://img.shields.io/npm/v/gulp-jspool.svg?style=flat)
+![](https://img.shields.io/npm/v/wct.svg?style=flat)
 
 ## Installation
 ```base
