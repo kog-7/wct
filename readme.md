@@ -28,6 +28,7 @@ npm install wct -g
     someProjectName
   }
 ```
+
 * 上传项目
 ```js
    someDir > wct -store someProjectName
@@ -45,6 +46,7 @@ npm install wct -g
  someDir > wct -link someProjectName
  取消link
  someDir > wct -unlink someProjectName
+```
 
 * 根据配置删除文件/文件夹
 ```js
@@ -99,5 +101,3 @@ module.export={
  wct -clean yourPojectName  //清除某个包
  wct -cleanall  //清掉所有包，小心
 ```
-
-## 版本
