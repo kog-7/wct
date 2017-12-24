@@ -1,6 +1,6 @@
 #   wct   #
 
-wct是本地项目文件的管理工具，指定一个本地项目文件夹，可以进行上载，下载，link等操作，同时也可以根据自己的需求去定制项目。主要用于项目的前期开发，和后期功能存档。
+wct是本地项目文件的管理工具，指定一个本地项目文件夹，可以进行上载，下载，link等操作，同时也可以根据自己的需求去定制项目。主要用于项目的前期开发，功能组件存档，配置文件存档。
 ![](https://img.shields.io/npm/v/gulp-jspool.svg?style=flat)
 
 ## Installation
@@ -16,7 +16,7 @@ npm install wct -g
 ## 使用
 * 初始使用需要配置上传目录中心
 ```js
-   wct yourPojectName D:\codeStore //也可以使用相对路径
+   wct -config yourPojectName D:\codeStore //也可以使用相对路径,迁移电脑的话可以包config的核心文件夹上传到git
 ```
 
 1. 通过配置wctfile.js文件配置
