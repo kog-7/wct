@@ -9,7 +9,7 @@ var objectHand=require("./lib/objectHand.js");
 
 var dispatch={
 url:urlHand,
-git:gitHand,
+// git:gitHand,
 cdn:cdnHand,
 object:objectHand
 };

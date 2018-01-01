@@ -1,41 +1,50 @@
-var ifs = require("fs-extra");
-var path = require("path");
+let ifs = require("fs-extra");
+let path = require("path");
 //不需要在wctfile里面定义的命令
-var cwd = process.cwd();
-const utils = require('./utils.js');
-var configStore = path.join(__dirname,"./config/store.json");
+let data=require("./data.js");
+let utils = require('./utils.js');
 
+//配置路径
+let configStore = path.join(__dirname,"./config/store.json");
+let cwd = process.cwd();
+
+let branch=utils.branch;
 
 // {name:"config",action:writeConfigStore,cmd:/(-config)|(--config)/g},
-var writeConfigStore = function(args) {
-  var url = args[0];
+let writeConfigStore = function() {
+  let url = data.get('name')[0];
+
   url=path.join(cwd,path.relative(cwd,url));
-  var createConfig = function() {
-    var that = this;
+
+
+
+
+  let createConfig = function(cb) {
     ifs.ensureFile(path.join(url, "store.js"), function(err) {
       if (err) {
         console.log(err);
       } else {
-        that.next();
+        cb();
       }
     });
   };
 
-  var read = function() {
-    var that = this;
+  let read = function(cb) {
     ifs.readJson(configStore, "utf8", function(err, obj) {
       if (err) {
-        console.log(err);
-        return;
+        // console.log(err);
+        // return;
+        console.log(`fix ${configStore} error`);
       }
       if(!obj){obj={};}
       obj.storeDir = url;
-      that.next(obj);
+
+      cb(obj);
     });
   }
 
-  var write = function(obj) {
-    ifs.writeJson(configStore, obj.flow[0], function(err) {
+  let write = function(obj) {
+    ifs.writeJson(configStore, obj, function(err) {
       if (err) {
         console.log(err);
         return;
@@ -47,14 +56,20 @@ var writeConfigStore = function(args) {
   };
 
 
-  var sync = new utils.sync();
-  sync.get(createConfig).get(read).get(write).go();
-
+  branch()
+  .get(function(){
+    createConfig(this)
+  })
+  .get(function(){
+    read(this);
+  })
+  .get(function(obj){
+    write(obj);
+  })
+  .run();
 };
 
 
-module.exports = [{
-  name: "config",
-  action: writeConfigStore,
-  cmd: /(-config)|(--config)/g
-}];
+module.exports = {
+  config:writeConfigStore
+};

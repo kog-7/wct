@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "local project management tool",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,11 @@
   },
   "keywords": [
     "custom project",
-    "upload ,download and link local projects"
+    "manage project",
+    "项目管理",
+    "代码存储",
+    "code store",
+    "项目自定义"
   ],
   "dependencies": {
     "chalk": "^2.3.0",

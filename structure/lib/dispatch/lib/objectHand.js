@@ -3,9 +3,9 @@ var parseArg=require("../parseArg.js");
 var path=require("path");
 
 
-
-var objectFun=function(src,dist,cback,arg,name){//cover只对object有效
-var arg=parseArg(arg);
+var objectFun=function(opt){//cover只对object有效,
+  let {src,dist,callback,args,name}=opt;//这里的src是对象
+var arg=parseArg(args);
 
 // var wrap=arg.wrap;
 if("wrap" in arg){//值没有，但是-wrap有的话
@@ -26,7 +26,7 @@ else{
 }
 
 
-create(src,dist,cover,cback);
+create(src,dist,cover,callback);
 
 };
 

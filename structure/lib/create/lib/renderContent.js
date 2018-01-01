@@ -7,7 +7,6 @@ var dispatch = require("../../dispatch/index.js");
 
 var renderContent = function(allPath, value, cover, cb) {
 
-
   ifs.stat(allPath, function(err, info) {
     if (!err && cover !== true) {
       console.log(allPath + " is exit");
@@ -33,10 +32,15 @@ var renderContent = function(allPath, value, cover, cb) {
             cb();
           }
         } else {
-          dispatch[type](content, allPath, cb, [{
-            type: "cover",
-            name: cover
-          }]);
+          dispatch[type]({
+            src:content,
+            dist:allPath,
+            callback:cb,
+            args:[{
+              type: "cover",
+              name: cover
+            }]
+          });
         }
       });
 

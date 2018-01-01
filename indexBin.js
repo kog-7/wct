@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
-var structureCmd=require("./structure/controller.js");
-var cwd = process.cwd(),
-    args = Array.prototype.slice.call(process.argv, 2);
+let data=require("./structure/data.js");
+let bootstrap=require("./structure/bootstrap.js");
 
-structureCmd(args);
+let args = Array.prototype.slice.call(process.argv, 2);
+data.init(args);//同步的
+bootstrap();
+
+// structureCmd(args);
