@@ -26,6 +26,24 @@ ps:路径可以用相对路径或绝对路径。
 ```
 
 #### 上传
+
+* 通过自定义命令行上传
+
+```js
+.....> wct -store dir1=url%./  //把当前文件夹以dir1的名字上传
+..... > wct -store file1=cdn%https:....html //把cdn上的文件用file1名字上传
+..... > wct -store dir2=object%{'a.html':null,cb:null}
+//通过对象自定义文件夹/文件内容上传
+
+ps: 注意
+在命令行中的object%{}对象里面不能再次引用其他资源调用，只能定义空的文件。
+比如不能使用dir2=object%{'a.html':'url(./aa.html)'..不能这样定义。
+不能在object%定义的对象中使用双引号 ""
+如果在使用对象的情况下自定义组合第三方内容请使用脚本wctfile.js的方式来上传。
+
+```
+
+
 * 通过脚本wctfile.js上传
 
 ```js
@@ -54,21 +72,6 @@ module.exports={
 
 ```
 
-* 通过自定义命令行上传
-
-```js
-.....> wct -store dir1=url%./  //把当前文件夹以dir1的名字上传
-..... > wct -store file1=cdn%https:....html //把cdn上的文件用file1名字上传
-..... > wct -store dir2=object%{'a.html':null,cb:null}
-//通过对象自定义文件夹/文件内容上传
-
-ps: 注意
-在命令行中的object%{}对象里面不能再次引用其他资源调用，只能定义空的文件。
-比如不能使用dir2=object%{'a.html':'url(./aa.html)'..不能这样定义。
-不能在object%定义的对象中使用双引号 ""
-如果在使用对象的情况下自定义组合第三方内容请使用脚本wctfile.js的方式来上传。
-
-```
 
 #### 下载/创建
 
