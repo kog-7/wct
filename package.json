@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "management components and scaffolding",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -8,7 +8,8 @@
   "keywords": [
     "manage scaffolding",
     "manage components",
-    "custom directory"
+    "custom directory",
+    "sites"
   ],
   "dependencies": {
     "chalk": "^2.3.0",

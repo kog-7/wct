@@ -24,7 +24,7 @@ wct exclude * -doc node_modlue   //exclude dir or file in all push command
 ...somedir > wct pull component1  //pull your code
 
 // special handle,special treatment upload code
-wct webq q-react
+wct exec q-react -type webq
 
 //create wctfile.js
 ...somedir > wct
@@ -35,13 +35,13 @@ wct webq q-react
 
 ## api
 
-#### config,before use wct,must define a code storage warehouse
+### config,before use wct,must define a code storage warehouse
 
 ```
 wct config C:\codeStore
 ```
 
-#### exclude,set dir&file which are not uploaded
+### exclude,set dir&file which are not uploaded
 
 ```
 // use * for all the upload.it only exclude some dir when push react-material if use wct exclude react-material -doc ..
@@ -51,7 +51,8 @@ wct exclude * -doc node_modlue .git
 
 ```
 
-#### push, push code to storage warehouse
+### push, push code to storage warehouse
+
 
 
 ```
@@ -77,14 +78,16 @@ wct exclude * -doc node_modlue .git
 // push some parts  between wct-part-start and wct-part-end
 ..somedir > wct push somename -url ./a.js -type part
 
-//special tool push ,webq
+
+/* exec tool push,must push json file */
+1: webq - some websites collection in one page
 //some.json is like [{"name":"react","des":"office web","link":"https://reactjs.org/docs/hello-world.html"}]
-...someDir > wct push q-react -url ./some.json
+...someDir > wct push q-react -url ./some.json -type webq
 
 ```
 
 
-#### pull, pull code to current dir
+### pull, pull code to current dir
 
 ```
 //create react-redux/childrenDir...
@@ -98,19 +101,19 @@ wct exclude * -doc node_modlue .git
 ```
 
 
-#### remove,remove exist lib
+### remove,remove exist lib
 
 ```
 //remove some lib
 wct remove react-redux  
 ```
 
-#### rename,rename lib name  
+### rename,rename lib name  
 ```
 wct rename react-redux -rename react-redux-material
 ```
 
-#### see
+### see
 ```
 //see all lib in storage warehouse
 wct see lib
@@ -120,7 +123,7 @@ wct see lib -f react-redux
 wct see exclude
 ```
 
-#### create wctfile.js
+### create wctfile.js
 
 ```
 ...someDir > wct
@@ -128,7 +131,7 @@ wct see exclude
 ```
 
 
-#### base tool
+### base tool
 ```
 //create dir a/b/c in current dir
 ...somedir > wct a/b/c/
@@ -138,20 +141,23 @@ wct see exclude
 ...somedir > wct copy:./a=to:./c
 ```
 
-#### special command
+### exec command
 
+###### webq , see the collection of sites in one page
+need install *iFrame Allow* plugin in browser if want to see some not allow embed iframe website
 
-###### webq ,need to add additional functionality
 ```
+//the json which use push just like as follow
+[{"name":"react","des":"office web","link":"https://reactjs.org/docs/hello-world.html"}]
+
 //after push q-react in above
-wct webq q-react
+wct exec q-react -type webq
 ```
-{"name":"react","des":"office web","link":"https://reactjs.org/docs/hello-world.html"},
 
  ![image](http://p0qkkmj34.bkt.clouddn.com/webq.gif)
 
 
-###### other functions
+### other commands
 .
 
 

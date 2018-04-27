@@ -1,29 +1,12 @@
 const fs=require("fs-extra");
-const utils=require("../../utils.js");
-let data = require("../../data.js");
+const utils=require("../../../utils.js");
+
 let nodepath=require("path");
-let promise_infoStore=require("../../services/promise_infoStore.js");
-let inquirer=require('inquirer');
-let promise_log=require("../../services/promise_log.js");
 let browserSync=require('browser-sync').create();
 
 
-let pull=function(){
-  let {cmdStore}=data;
-  let {content}=cmdStore;
-  let {cmd,arg}=content;
-  let value=cmd[1],cmdType=cmd[0];
-  let {nowrap,rename,cover=[false],port=[8090],open=[true]}=arg;
-  cover=cover[0];
-  cover=utils.toBoolean(cover);
-  return new Promise((resolve,reject)=>{
-    promise_infoStore(value)//value是lib名字
-    .then((config)=>{
-      let path=config.path;
-      
-      let url=nodepath.join(path,'webq.json');
-
-
+let run=function(url,resolve,reject,arg){
+  let {cover=[false],port=[8090],open=[true],type}=arg;
       fs.readJson(url)
       .then(function(arr){
         if(!Array.isArray(arr)==='array'){
@@ -31,18 +14,17 @@ let pull=function(){
           return;
         }
 
-        fs.writeFile(nodepath.join(__dirname,'./__webqStatic/config.js'),`window.webqConfig=${JSON.stringify(arr)}`,function(err){
+        fs.writeFile(nodepath.join(__dirname,'./webapp/config.js'),`window.webqConfig=${JSON.stringify(arr)}`,function(err){
           if(err){
             reject(err);
             return;
           }
           else{
-
             browserSync.init({
               port:port[0],
               open:open[0],
               server:{
-                baseDir:nodepath.join(__dirname,'./__webqStatic'),
+                baseDir:nodepath.join(__dirname,'./webapp'),
                 index:'index.html'
               }
             });
@@ -60,14 +42,7 @@ let pull=function(){
       });
 
 
-    })
-    .catch((err)=>{
-      reject(err);
-    })
-
-  })
-
 };
 
 
-module.exports=pull;
+module.exports=run;

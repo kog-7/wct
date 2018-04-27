@@ -10,7 +10,7 @@ let nodepath=require("path");
 let data={
   cmdStore:null,
   configStore:null,
-  feature:['config','exclude','link','pull','push','remove','see','rename','webq'],
+  feature:['config','exclude','link','pull','push','remove','see','rename','exec'],
   readCmd(arg){
     return new Promise((resolve,reject)=>{
       if(this.cmdStore){resolve();}
