@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "management components and scaffolding",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,11 +15,12 @@
     "chalk": "^2.3.0",
     "exec-series": "^1.0.3",
     "fs-extra": "^3.0.1",
-    "request": "^2.81.0"
-  },
-  "devDependencies": {
+    "request": "^2.81.0",
     "browser-sync": "^2.23.6",
     "inquirer": "^5.1.0"
+  },
+  "devDependencies": {
+
   },
   "author": "kog-7",
   "license": "MIT",
