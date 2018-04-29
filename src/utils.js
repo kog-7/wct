@@ -6,7 +6,7 @@ let wctPartParse=require("./utils/wctPartParse.js");
 let fs=require("fs-extra");
 let cwd=process.cwd();
 let nodepath=require('path');
-
+const fileMatch=require('file-match');
 
 
 let yesLog=(msg)=>{
@@ -163,13 +163,14 @@ let concatExclude=(key,exclude,globalExclude)=>{
 
 
 let includeArrayItem=(arr,str)=>{//数组里面有一个字符串是被包含在str当中的
-let out=false;
-arr.forEach((item)=>{
-  if(str.indexOf(item)!==-1){
-    out=true;
+for(let item of arr){
+  let filterMe=fileMatch(item);
+  let realPath=nodepath.relative(cwd,str);
+  if(filterMe(realPath)){
+    return true;
   }
-});
-return out;
+}
+return false;
 }
 
 

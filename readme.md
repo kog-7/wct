@@ -44,6 +44,8 @@ wct config C:\codeStore
 
 ### exclude,set dir&file which are not uploaded
 
+** exclude path filter use [file-match](https://www.npmjs.com/package/file-match) **
+
 ```
 // use * for all the upload.it only exclude some dir when push react-material if use wct exclude react-material -doc ..
 //not push node_modlue  and .git dir
