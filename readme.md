@@ -1,6 +1,6 @@
 #   wct   #
 
-management components and scaffolding
+manage components,commands,scaffolding
 
 ![](https://img.shields.io/npm/v/wct.svg?style=flat)
 
