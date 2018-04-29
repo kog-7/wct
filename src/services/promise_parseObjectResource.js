@@ -45,7 +45,7 @@ let writeUrl=({path,url,resolve,reject,cover,exclude,rename})=>{//path为目标p
 
   fs.copy(absUrl,path,{overwrite:cover,filter:(sourcePath)=>{
 
-    if(utils.includeArrayItem(exclude,sourcePath)){
+    if(utils.matchArrayItem(exclude,sourcePath,absUrl)){
       return false;
     }
     else{
@@ -118,7 +118,7 @@ lastObj=lastObj?lastObj:{};
     let {name,content,rename}=obj;
     let {name:lastName,content:lastContent}=lastObj;
     return new Promise((resolve,reject)=>{
-      if(utils.includeArrayItem(exclude,name)){
+      if(utils.includeArrayItem(exclude,name)){//如果名字就包含了，则
         resolve(null);
         return;
       }

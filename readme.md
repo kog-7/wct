@@ -1,6 +1,6 @@
 #   wct   #
 
-manage components,commands,scaffolding
+management components and scaffolding
 
 ![](https://img.shields.io/npm/v/wct.svg?style=flat)
 
@@ -44,13 +44,14 @@ wct config C:\codeStore
 
 ### exclude,set dir&file which are not uploaded
 
-** exclude path filter use [file-match](https://www.npmjs.com/package/file-match) **
+** exclude use micromatch to filte path   [micromatch](https://www.npmjs.com/package/micromatch)   **
+
 
 ```
 // use * for all the upload.it only exclude some dir when push react-material if use wct exclude react-material -doc ..
 //not push node_modlue  and .git dir
 
-wct exclude * -doc node_modlue .git
+wct exclude * -doc node_modlue someDir/*.md
 
 ```
 

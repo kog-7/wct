@@ -6,7 +6,7 @@ let wctPartParse=require("./utils/wctPartParse.js");
 let fs=require("fs-extra");
 let cwd=process.cwd();
 let nodepath=require('path');
-const fileMatch=require('file-match');
+const fileMatch=require('micromatch');
 
 
 let yesLog=(msg)=>{
@@ -101,29 +101,29 @@ let absPath=(ph)=>{
 
 let promise_ensure=(ph)=>{
 
-return new Promise((resolve,reject)=>{
-if(ph.indexOf(".")===-1){
-  fs.ensureDir(ph)
-  .then(()=>{
-    resolve();
-  })
-  .catch(err => {
-  resolve(true);
-})
-}
-else{
-  fs.stat(ph,(err,stats)=>{
-    let exist=true;
-    if(err){//不存在
-      exist=false;
+  return new Promise((resolve,reject)=>{
+    if(ph.indexOf(".")===-1){
+      fs.ensureDir(ph)
+      .then(()=>{
+        resolve();
+      })
+      .catch(err => {
+        resolve(true);
+      })
     }
-    fs.ensureFile(ph,(err)=>{
-    resolve(exist);
-  });
-  });
+    else{
+      fs.stat(ph,(err,stats)=>{
+        let exist=true;
+        if(err){//不存在
+          exist=false;
+        }
+        fs.ensureFile(ph,(err)=>{
+          resolve(exist);
+        });
+      });
 
-}
-});
+    }
+  });
 };
 //wct-part-start
 let absoluteCwdPath=(ph)=>{
@@ -136,13 +136,13 @@ let absoluteCwdPath=(ph)=>{
 };
 
 let quitSame=(arr1)=>{
-let out=[];
-arr1.forEach((obj)=>{
-  if(out.indexOf(obj)===-1){
+  let out=[];
+  arr1.forEach((obj)=>{
+    if(out.indexOf(obj)===-1){
       out.push(obj);
-  }
-});
-return out;
+    }
+  });
+  return out;
 }
 
 
@@ -162,20 +162,34 @@ let concatExclude=(key,exclude,globalExclude)=>{
 
 
 
-let includeArrayItem=(arr,str)=>{//数组里面有一个字符串是被包含在str当中的
-for(let item of arr){
-  let filterMe=fileMatch(item);
-  let realPath=nodepath.relative(cwd,str);
-  if(filterMe(realPath)){
-    return true;
+let matchArrayItem=(arr,str,basePath)=>{//数组里面有一个字符串是被包含在str当中的
+  str=nodepath.normalize(str);
+  basePath=nodepath.normalize(basePath);
+  for(let item of arr){
+    let realPath=nodepath.relative(basePath,str);
+    realPath=realPath?realPath:"./";
+    if(fileMatch.isMatch(realPath,item)){
+      return true;
+    }
   }
-}
-return false;
-}
+  return false;
+};
+
+let includeArrayItem=(arr,str)=>{//数组里面有一个字符串是被包含在str当中的
+  str=nodepath.normalize(str);
+  for(let item of arr){
+    if(str.indexOf(item)!==-1){
+      return true;
+    }
+  }
+  return false;
+};
+
+
 
 
 let renamePath=(ph,name)=>{
-return nodepath.join(nodepath.dirname(ph),nodepath.basename(name)+nodepath.extname(ph));
+  return nodepath.join(nodepath.dirname(ph),nodepath.basename(name)+nodepath.extname(ph));
 };
 
 let toBoolean=(tf)=>{
@@ -185,14 +199,14 @@ let toBoolean=(tf)=>{
 
 
 let objectArrayInclude=(arr,value,key)=>{
-let out=-1;
-let lg=arr.length;
-for(let i=0;i<lg;i+=1){
-  if(arr[i][key]===value){
-    return i;
+  let out=-1;
+  let lg=arr.length;
+  for(let i=0;i<lg;i+=1){
+    if(arr[i][key]===value){
+      return i;
+    }
   }
-}
-return out;
+  return out;
 };
 
 
@@ -201,9 +215,9 @@ let includeKeys=(obj,keys=[])=>{//keys中有一个是obj的属性
   if(keys.length===0){return false;}
   let out=false;
   keys.forEach((key)=>{
-      if(key in obj){
-        out=true;
-      }
+    if(key in obj){
+      out=true;
+    }
   });
   return out;
 };
@@ -222,16 +236,16 @@ let readObjectToPlain=(obj)=>{//根据数组，content,children解析,递归
   let f=function(content){
     if(typeof content==='object'){
       if(Array.isArray(content)){
-          content.forEach((ob,ind)=>{
-            f(ob);
-          })
+        content.forEach((ob,ind)=>{
+          f(ob);
+        })
       }
       else{
         let aim=content;
-          out.push(aim.content);
-          if(Array.isArray(aim.children)&&aim.children.length>0){
-            f(aim.children);
-          }
+        out.push(aim.content);
+        if(Array.isArray(aim.children)&&aim.children.length>0){
+          f(aim.children);
+        }
       }
     }
   };
@@ -265,6 +279,7 @@ module.exports={
   msgLog,
   cwd,
   absPath,
+  matchArrayItem,
   wctPartParse,
   isEmptyObject:(obj)=>{
     let keys=Object.keys(obj);
