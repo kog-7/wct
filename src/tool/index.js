@@ -70,6 +70,7 @@ let remove=(content,resolve,reject)=>{
 
 let copyPaste=(copy,to,resolve,reject)=>{
 to=nodepath.join(to,nodepath.basename(copy));
+
   fs.copy(copy,to)
   .then(()=>{
     utils.yesLog(`${copy} is copy to ${to}`);

@@ -7,7 +7,7 @@ let promise_parseObjectResource=require("../../services/promise_parseObjectResou
 let promise_infoStore=require("../../services/promise_infoStore.js");
 let promise_log=require("../../services/promise_log.js");
 const vm=require('vm');
-let types=require('./types.js');
+let argsHandle=require('./argsHandle.js');
 
 
 let push=function(){
@@ -19,7 +19,7 @@ return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
   let {content}=cmdStore;
   let {cmd,arg}=content;
   let value=cmd[1],cmdType=cmd[0];
-  let {cover=[false],exclude=[],des=[''],commit=[''],type=[null],append=[false]}=arg;
+  let {cover=[false],exclude=[],des=[''],commit=[''],type=[null],append=[false],part=false}=arg;
   cover=cover[0];
   append=append[0]
   cover=utils.toBoolean(cover);
@@ -34,6 +34,7 @@ return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
       //拿出exclude
       let allExclude=utils.concatExclude(value,exclude,config.exclude);//value为库的名字
       let rename=null;
+      let {types,part:partHandle}=argsHandle;
       let typeIndex=utils.objectArrayInclude(types,type[0],'key');
 
 
@@ -59,6 +60,7 @@ return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
         });
       }
 
+
       if(typeIndex!==-1){
         obj=types[typeIndex]
         .change(obj)
@@ -75,6 +77,24 @@ return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
         .catch((err)=>{
           rej(err);
         })
+      }
+      else if(part[0]===true||part[0]==='true'){//part 情况存在
+        obj=partHandle
+        .change(obj)
+        .then((out)=>{
+          if(out===false){
+            utils.noLog(`there is a error in  type ${type[0]},you need ${partHandle.des}`);
+            rej();
+          }
+          else{
+            rename=partHandle.rename;
+            parseObject(out,rename);
+          }
+        })
+        .catch((err)=>{
+          rej(err);
+        })
+
       }
       else{
         parseObject(obj,rename);

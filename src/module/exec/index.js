@@ -7,7 +7,8 @@ let promise_infoStore=require("../../services/promise_infoStore.js");
 
 
 let feature=[
-'webq'
+'webq',
+'cmd'
 ];
 
 let exec=function(){

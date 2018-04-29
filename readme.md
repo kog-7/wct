@@ -25,6 +25,7 @@ wct exclude * -doc node_modlue   //exclude dir or file in all push command
 
 // special handle,special treatment upload code
 wct exec q-react -type webq
+wct exec computer-start -type cmd
 
 //create wctfile.js
 ...somedir > wct
@@ -75,14 +76,17 @@ wct exclude * -doc node_modlue .git
 // des ,  this lib description
 ...somedir > wct push react-redux -cover true -exclude dist -commit "change cont"   -des "this is use for..."
 
-// push some parts  between wct-part-start and wct-part-end
-..somedir > wct push somename -url ./a.js -type part
+// push string  between wct-part-start and wct-part-end in file
+..somedir > wct push somename -url ./a.js -part true
 
 
 /* exec tool push,must push json file */
 1: webq - some websites collection in one page
 //some.json is like [{"name":"react","des":"office web","link":"https://reactjs.org/docs/hello-world.html"}]
 ...someDir > wct push q-react -url ./some.json -type webq
+2: cmd -commands step run
+//some.json is like [{"cmd":"start chrome"},{"cmd":"start https://google.com"},{"cmd":"mkdir exp"}]
+...someDir > wct push computer-start -url ./some.json -type cmd
 
 ```
 
@@ -143,11 +147,21 @@ wct see exclude
 
 ### exec command
 
+
+###### cmd   commands step run
+
+```
+//the json which use push maybe like as follow
+ [{"cmd":"start chrome"},{"cmd":"start https://google.com"},{"cmd":"mkdir exp"}]
+ //after push computer-start in above
+wct exec computer-start -type cmd
+```
+
 ###### webq , see the collection of sites in one page
 need install *iFrame Allow* plugin in browser if want to see some not allow embed iframe website
 
 ```
-//the json which use push just like as follow
+//the json which use push maybe like as follow
 [{"name":"react","des":"office web","link":"https://reactjs.org/docs/hello-world.html"}]
 
 //after push q-react in above
@@ -157,8 +171,6 @@ wct exec q-react -type webq
  ![image](http://p0qkkmj34.bkt.clouddn.com/webq.gif)
 
 
-### other commands
-.
 
 
 ## wctfile format
@@ -179,4 +191,25 @@ module.exports={
     }
   }
 }
+```
+
+
+## others
+
+* push part contents
+
+```
+//the content of file
+let a=1;
+...
+//wct-part-start
+  function fun1(){}
+    //wct-part-start
+        function fun2(){}
+    //wct-part-end
+//wct-part-end
+//the content of file end
+
+//cmd  
+wct push somename -url ./a.js -part true
 ```
