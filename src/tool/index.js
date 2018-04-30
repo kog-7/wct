@@ -92,6 +92,7 @@ let tool = () => {
       if(out.type==="remove"){
         inquirer.prompt([{name:'confirm',choices:['yes','no'],type:'input',message:`are you sure to remove ${content}?yes/no`}]).then((ans)=>{
           if(ans.confirm==='yes'){
+            utils.yesLog(`waiting...`);
             remove(out.content,resolve,reject);
           }
           else{

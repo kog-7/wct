@@ -1,12 +1,12 @@
 {
   "name": "wct",
-  "version": "2.2.6",
-  "description": "manage components,commands,scaffolding",
+  "version": "2.2.8",
+  "description": "manage components,commands,scaffolding,useful files local",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "manage scaffolding,commands",
+    "manage scaffolding,commands,files",
     "manage components",
     "config",
     "custom directory",

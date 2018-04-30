@@ -1,6 +1,6 @@
 #   wct   #
 
-management components and scaffolding
+manage components,commands,scaffolding,useful files local
 
 ![](https://img.shields.io/npm/v/wct.svg?style=flat)
 
@@ -44,7 +44,7 @@ wct config C:\codeStore
 
 ### exclude,set dir&file which are not uploaded
 
-** exclude use micromatch to filte path   [micromatch](https://www.npmjs.com/package/micromatch)   **
+exclude use micromatch to filte path   [micromatch](https://www.npmjs.com/package/micromatch){:target="_blank"}
 
 
 ```
