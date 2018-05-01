@@ -23,7 +23,7 @@ wct exclude * -doc node_modlue   //exclude dir or file in all push command
 ...somedir > wct push component1  //push your code
 ...somedir > wct pull component1  //pull your code
 
-//open server to view all lib in page which stored
+//open server to view all libs in browser
 wct lib *
 
 // special handle,special treatment upload code
@@ -41,7 +41,7 @@ wct exec computer-start -type cmd
 
 
 
-## api
+## feature list&&api
 
 ### config,before use wct,must define a code storage warehouse
 
@@ -137,7 +137,7 @@ wct rename react-redux -rename react-redux-material
 wct lib *
 ```
 
-![image](https://wct666.oss-cn-shenzhen.aliyuncs.com/wlib.gif?Expires=1525162969&OSSAccessKeyId=TMP.AQGOUCcF8nN7NXiEIaLvJmzT7WyRv29yg6X9QBGssKOKaBuPK70EHFBrdJRWADAtAhRJJXrgp3ygo0oJ8jjsyF7q0L02WwIVAMMtW8vbRIL1xzJ98abkeRXDFS5Z&Signature=QaXZUeaMSNDAR%2BeMQjBK3zta7zA%3D)
+![image](https://wct666.oss-cn-shenzhen.aliyuncs.com/wlib.gif)
 
 
 
@@ -195,7 +195,7 @@ need install *iFrame Allow* plugin in browser if want to see some not allow embe
 wct exec q-react -type webq
 ```
 
- ![image](https://wct666.oss-cn-shenzhen.aliyuncs.com/wq.gif?Expires=1525162991&OSSAccessKeyId=TMP.AQGOUCcF8nN7NXiEIaLvJmzT7WyRv29yg6X9QBGssKOKaBuPK70EHFBrdJRWADAtAhRJJXrgp3ygo0oJ8jjsyF7q0L02WwIVAMMtW8vbRIL1xzJ98abkeRXDFS5Z&Signature=aE%2Fz1E3nKZO5FGe4HBI%2Fe2RS4zU%3D)
+ ![image](https://wct666.oss-cn-shenzhen.aliyuncs.com/wq.gif)
 
 
 
