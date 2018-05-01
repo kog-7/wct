@@ -37,7 +37,7 @@ let run=function(url,resolve,reject,arg){
             if(errOut){
               console.log(errOut);
             }
-        
+
           });
 
           setTimeout(function () {

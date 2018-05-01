@@ -15,7 +15,7 @@ let pull=function(){
   return new Promise((resolve,reject)=>{
     promise_infoStore()//value是lib名字
     .then((config)=>{
-      if(value==='lib'){
+      if(value==='*'){
         let path=config.path;
         fs.readdir(path,function(err,files){
           if(err){
@@ -60,7 +60,7 @@ let pull=function(){
         })
       }
       else{
-        utils.noLog(`can use wct see lib or wct see exclude`);
+        utils.noLog(`can use wct see * or wct see exclude`);
         reject();
       }
     })

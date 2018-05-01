@@ -7,6 +7,7 @@ let remove=require('./remove/index.js');
 let see=require('./see/index.js');
 let rename=require('./rename/index.js');
 let exec=require('./exec/index.js');
+let lib=require('./lib/index.js');
 
 module.exports={
   rename,
@@ -17,5 +18,6 @@ module.exports={
   link,
   pull,
   push,
-  exec
+  exec,
+  lib
 }

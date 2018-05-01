@@ -23,6 +23,9 @@ wct exclude * -doc node_modlue   //exclude dir or file in all push command
 ...somedir > wct push component1  //push your code
 ...somedir > wct pull component1  //pull your code
 
+//open server to view all lib in page which stored
+wct lib *
+
 // special handle,special treatment upload code
 wct exec q-react -type webq
 wct exec computer-start -type cmd
@@ -33,6 +36,10 @@ wct exec computer-start -type cmd
 //base tool
 ..somedir >wct a/b/c/k.js   ..somedir > wct rm:a/b
 ```
+
+
+
+
 
 ## api
 
@@ -120,12 +127,27 @@ wct remove react-redux
 wct rename react-redux -rename react-redux-material
 ```
 
+
+
+### lib,view lib(beta can only read file now)
+
+```
+//can use wct lib * -browser chrome  
+// to point browser open
+wct lib *
+```
+
+![image](https://wct666.oss-cn-shenzhen.aliyuncs.com/wlib.gif?Expires=1525162969&OSSAccessKeyId=TMP.AQGOUCcF8nN7NXiEIaLvJmzT7WyRv29yg6X9QBGssKOKaBuPK70EHFBrdJRWADAtAhRJJXrgp3ygo0oJ8jjsyF7q0L02WwIVAMMtW8vbRIL1xzJ98abkeRXDFS5Z&Signature=QaXZUeaMSNDAR%2BeMQjBK3zta7zA%3D)
+
+
+
+
 ### see
 ```
-//see all lib in storage warehouse
-wct see lib
-// see some lib
-wct see lib -f react-redux
+//see all * in storage warehouse
+wct see *
+// see some *
+wct see * -f react-redux
 //see exclude
 wct see exclude
 ```
@@ -168,10 +190,12 @@ need install *iFrame Allow* plugin in browser if want to see some not allow embe
 [{"name":"react","des":"office web","link":"https://reactjs.org/docs/hello-world.html"}]
 
 //after push q-react in above
+// can use wct exec q-react -type webq -browser chrome
+//to point browser open
 wct exec q-react -type webq
 ```
 
- ![image](http://p0qkkmj34.bkt.clouddn.com/webq.gif)
+ ![image](https://wct666.oss-cn-shenzhen.aliyuncs.com/wq.gif?Expires=1525162991&OSSAccessKeyId=TMP.AQGOUCcF8nN7NXiEIaLvJmzT7WyRv29yg6X9QBGssKOKaBuPK70EHFBrdJRWADAtAhRJJXrgp3ygo0oJ8jjsyF7q0L02WwIVAMMtW8vbRIL1xzJ98abkeRXDFS5Z&Signature=aE%2Fz1E3nKZO5FGe4HBI%2Fe2RS4zU%3D)
 
 
 
