@@ -19,9 +19,10 @@ return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
   let {content}=cmdStore;
   let {cmd,arg}=content;
   let value=cmd[1],cmdType=cmd[0];
-  let {cover=[false],exclude=[],des=[''],commit=[''],type=[null],append=[false],part=false}=arg;
+  let {cover=[false],exclude=[],des=[''],commit=[''],type=[null],append=[false],part=false,wrap=[false]}=arg;
   cover=cover[0];
-  append=append[0]
+  append=append[0];
+  wrap=wrap[0];
   cover=utils.toBoolean(cover);
   append=utils.toBoolean(append);
 
@@ -46,6 +47,7 @@ return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
           dist:path,
           exclude:allExclude,
           cover,
+          wrap,
           append,
           rename
         })

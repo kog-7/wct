@@ -43,7 +43,7 @@ let run=function(url,resolve,reject,arg){
           setTimeout(function () {
             utils.yesLog(`${cmder} runed`);
             resolve();
-          }, 2000);
+          }, 2800);
 
         });
       });

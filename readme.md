@@ -70,6 +70,9 @@ wct exclude * -doc node_modlue someDir/*.md
 //push current dir and named react-redux-material then upload
 ..somedir > wct push react-redux-material
 
+//if update react-redux-material lib and push a single directory to it ,can use -wrap true to contain 'config' dir name,otherwise it will only push its children contents
+..somedir > wct push react-redux-material -url ./config -wrap true -cover true
+
 // use special dir to upload
 ..somedir > wct push react-redux -url ./dist
 
