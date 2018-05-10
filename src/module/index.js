@@ -8,8 +8,10 @@ let see=require('./see/index.js');
 let rename=require('./rename/index.js');
 let exec=require('./exec/index.js');
 let lib=require('./lib/index.js');
+let combine=require('./combine/index.js');
 
 module.exports={
+  combine,
   rename,
   see,
   remove,

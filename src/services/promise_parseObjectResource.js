@@ -30,6 +30,7 @@ let parseChildren=(content,lastName)=>{
 
 
 let writeUrl=({path,url,resolve,reject,cover,exclude,rename,wrap})=>{//path为目标path
+
   if(rename&&typeof rename==='string'){//根据特定的目的，更改path名字，达到wct type解析，类似webq
     path=nodepath.join(path,rename);
   }
@@ -70,6 +71,42 @@ let writeUrl=({path,url,resolve,reject,cover,exclude,rename,wrap})=>{//path为�
 };
 
 
+
+let writeStore=({path,name,resolve,reject,cover,exclude,storePath})=>{//path为目标path
+  if(storePath&&name){
+    let ph=nodepath.join(storePath,name);
+    let absUrl=utils.absoluteCwdPath(ph);
+    fs.stat(ph,function(err,stats){
+      if(err){
+        reject(err);
+      }
+      else{
+        fs.copy(ph,path,{overwrite:cover,filter:(sourcePath)=>{
+          if(utils.matchArrayItem(exclude,sourcePath,absUrl)){
+            return false;
+          }
+          else{
+            return true;
+          }
+        }})
+        .then(()=>{
+          resolve()
+        })
+        .catch((err) => {
+          reject(err);
+        })
+      }
+    });
+  }
+  else{
+    resolve();
+  }
+};
+
+
+
+
+
 let writeCdn=(path,url,resolve,reject,cover)=>{
 
 };
@@ -77,25 +114,28 @@ let writeCdn=(path,url,resolve,reject,cover)=>{
 
 let writeString=({path,url,resolve,reject,cover,append})=>{
 
-if(append===true&&cover===false){//cover的权限更高
-  fs.appendFile(path,url,(err)=>{
-    if(err){reject(err)}
-    else{resolve();}
-  });
-}
-else{
-  fs.writeFile(path,url,'utf8',(err)=>{
-  if(err){reject(err)}
-  else{resolve();}
-  });
-}
+  if(append===true&&cover===false){//cover的权限更高
+    fs.appendFile(path,url,(err)=>{
+      if(err){reject(err)}
+      else{resolve();}
+    });
+  }
+  else{
+    fs.writeFile(path,url,'utf8',(err)=>{
+      if(err){reject(err)}
+      else{resolve();}
+    });
+  }
 }
 
 
 //全部是xxx:的语法
-let writeAction=({path,url,resolve,reject,cover,exist,exclude,rename,append,wrap})=>{//ph为目标路径
+let writeAction=({path,url,resolve,reject,cover,exist,exclude,rename,append,wrap,storePath})=>{//ph为目标路径
   if(url.indexOf("url:")===0){
     writeUrl({path,url:url.slice(4),resolve,reject,cover,exclude,rename,append,wrap});
+  }
+  else if(url.indexOf("store:")===0){
+    writeStore({path,name:url.slice(6),resolve,reject,cover,exclude,storePath});
   }
   else if(url.indexOf('cdn:')===0&&append===false){
     if(exist===true&&cover===false){
@@ -112,7 +152,7 @@ let writeAction=({path,url,resolve,reject,cover,exist,exclude,rename,append,wrap
       resolve();
     }
     else{
-        writeString({path,url,resolve,reject,cover,append});
+      writeString({path,url,resolve,reject,cover,append});
     }
   }
 };
@@ -121,13 +161,14 @@ let writeAction=({path,url,resolve,reject,cover,exist,exclude,rename,append,wrap
 
 
 
-let promiseRun=({append,cover,exclude,wrap})=>{
-return function(obj,lastObj){
-lastObj=lastObj?lastObj:{};
+let promiseRun=({append,cover,exclude,wrap,storePath})=>{
+
+  return function(obj,lastObj){
+    lastObj=lastObj?lastObj:{};
     let {name,content,rename}=obj;
     let {name:lastName,content:lastContent}=lastObj;
     return new Promise((resolve,reject)=>{
-      if(utils.includeArrayItem(exclude,name)){//如果名字就包含了，则
+      if(name&&utils.includeArrayItem(exclude,name)){//如果名字就包含了，则
         resolve(null);
         return;
       }
@@ -137,7 +178,8 @@ lastObj=lastObj?lastObj:{};
         .then((exist)=>{
           if(typeof content==="string"){
 
-            writeAction({path:name,url:content,resolve,reject,cover,exist,exclude,rename,append,wrap});
+            writeAction({path:name,url:content,resolve,reject,cover,exist,exclude,rename,append,wrap,storePath});
+
           }
           else if(typeof content==='object'&&content!==null){
             let arr=parseChildren(content,name);
@@ -152,7 +194,7 @@ lastObj=lastObj?lastObj:{};
         });
       }
 
-})
+    })
 
   }
 };
@@ -160,7 +202,7 @@ lastObj=lastObj?lastObj:{};
 
 let promise_parseObjectResource=(opt)=>{
   return new Promise((resolve,reject)=>{
-    let {content={},dist=null,cover=false,exclude=[],rename,append=false,wrap}=opt;
+    let {content={},dist=null,cover=false,exclude=[],rename,append=false,wrap,storePath=''}=opt;
     let exp=new explore();
 
     utils.yesLog(`is creating process,please waiting ......`);
@@ -171,8 +213,8 @@ let promise_parseObjectResource=(opt)=>{
     exp.setError(err=>{
       reject(err);
     });
-//rename用于特殊的push type，主要针对单file类型,转为固定可以被识别的文件名
-    exp.parse(promiseRun({append,cover,exclude,wrap})).run({input:{name:dist,content,rename}});
+    //rename用于特殊的push type，主要针对单file类型,转为固定可以被识别的文件名
+    exp.parse(promiseRun({append,cover,exclude,wrap,storePath})).run({input:{name:dist,content,rename}});
   });
 
 };

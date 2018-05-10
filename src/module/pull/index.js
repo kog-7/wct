@@ -10,7 +10,7 @@ let pull=function(){
   let {content}=cmdStore;
   let {cmd,arg}=content;
   let value=cmd[1],cmdType=cmd[0];
-  let {nowrap,rename,cover=[false]}=arg;
+  let {wrap,rename,cover=[false]}=arg;
   cover=cover[0];
   cover=utils.toBoolean(cover);
   return new Promise((resolve,reject)=>{
@@ -20,7 +20,7 @@ let pull=function(){
       let aim=utils.cwd;
       let rootValue=value.split("/")[0];
       // if(wrap&&wrap[0]){aim=nodepath.join(aim,wrap[0]);}//包裹一层
-      if(!nowrap||nowrap[0]!=='true'){
+      if(!wrap||wrap[0]!=='false'){
         aim=nodepath.join(aim,rootValue);
       }
       let basename=nodepath.basename(path);

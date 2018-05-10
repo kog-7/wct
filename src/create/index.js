@@ -13,7 +13,7 @@ let create=()=>{
       utils.noLog('wctfile.js is exited');
     })
     .catch(()=>{//如果不是file
-      utils.branch_writeFile(path,`module.exports={push:{\n//${dir}:'url(./)'}\n}};`).then(()=>{
+      utils.branch_writeFile(path,`module.exports={combine:{   }};`).then(()=>{
           resolve();
         }).catch((err)=>{
           reject(err)

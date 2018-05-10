@@ -21,7 +21,6 @@ wct config C:\codeStore    //storage warehouse
 wct exclude * -doc node_modlue   //exclude dir or file in all push command
 
 ...somedir > wct push component1  //push your code
-...somedir > wct pull component1  //pull your code
 
 //open server to view all libs in browser
 wct lib *
@@ -32,6 +31,10 @@ wct exec computer-start -type cmd
 
 //create wctfile.js
 ...somedir > wct
+
+// combine resource from wctfile.js
+// wctfile.js    module.exports={combine:{ proj1:{ dir1:{ dir2:'url:./q-react',dir3:'store:ropegulp'}}}};
+...somedir > wct combine proj1      //create corresponding resource in current project
 
 //base tool
 ..somedir >wct a/b/c/k.js   ..somedir > wct rm:a/b
@@ -70,24 +73,15 @@ wct exclude * -doc node_modlue someDir/*.md
 //push current dir and named react-redux-material then upload
 ..somedir > wct push react-redux-material
 
-//if update react-redux-material lib and push a single directory to it ,can use -wrap true to contain 'config' dir name,otherwise it will only push its children contents
-..somedir > wct push react-redux-material -url ./config -wrap true -cover true
-
 // use special dir to upload
 ..somedir > wct push react-redux -url ./dist
-
-// create content via use wctfile config
-// in wctfile.js: module.exports={push:{material:['a.js','url(./a/b)','c.js']}}
-..somedir > wct push react-redux-material -wctfile material
-
-// use special object to upload
-..somedir > wct push react-redux -object {'a':{'b':['a.html']},'b.js'}
 
 // cover true cover the already existing content
 //exclude ,exclude push path for current push task
 // commit ,current push commit instruction
 // des ,  this lib description
 ...somedir > wct push react-redux -cover true -exclude dist -commit "change cont"   -des "this is use for..."
+
 
 // push string  between wct-part-start and wct-part-end in file
 ..somedir > wct push somename -url ./a.js -part true
@@ -110,8 +104,8 @@ wct exclude * -doc node_modlue someDir/*.md
 //create react-redux/childrenDir...
 ...somedir > wct pull react-redux
 
-//pull children contents and not wrap react-redux name
-..somedir > wct pull react-redux -nowrap true
+//pull children contents and not wrap react-redux name,default wrap value is true
+..somedir > wct pull react-redux -wrap false
 
 //create someproj/childrenDir...,cover true cover exist file
 ..somedir >wct pull react-redux -rename someproj -cover true
@@ -163,6 +157,14 @@ wct see exclude
 ```
 
 
+### combine resource from wctfile.js
+
+```
+//wctfile.js   module.exports={combine:{ proj1:{ dir1:{ dir2:'url:./q-react',dir3:'store:ropegulp'}}}};
+...somedir > wct combine proj1      //create corresponding resource in current project
+```
+
+
 ### base tool
 ```
 //create dir a/b/c in current dir
@@ -207,20 +209,15 @@ wct exec q-react -type webq
 
 ```
 module.exports={
-  push:{
-    dir1:'url:./a',
-    file1:'url:./c/d',
-    dir2:{
-      'a.html':null,
-      'b.html':'//write by some',//default content
-      dirx:['m.html','k.html','url:m.html'],
-      dira:{
-        c:['m.html'],
-        dirb:{'m.html':'url:./a/b.html'},
-        dirc:'url:./example'}
+  combine:{
+    proj1:{
+      a:{
+        b:'./q-react'
+      }
     }
-  }
-}
+
+}};
+
 ```
 
 
