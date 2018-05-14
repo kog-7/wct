@@ -52,12 +52,16 @@ let pull=function(){
           for(let i in ex){
             str+="lib:"+i+" exclude > "+ex[i].join(",")+"\n  ";
           }
-          utils.msgLog(`you have exclude:\n ${str}`);
+          console.log(`you have exclude:\n ${str}`);
           resolve();
         })
         .catch((err)=>{
           reject(err);
         })
+      }
+      else if(value==='store'){
+          console.log(`you have store: ${config.path}`);
+          resolve();
       }
       else{
         utils.noLog(`can use wct see * or wct see exclude`);

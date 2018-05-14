@@ -4,7 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// var cors=require('cors');
+var cors=require('cors');
 
 var renders = require('./routes/renders/index');
 var pages = require('./routes/pages/index');
@@ -53,7 +53,7 @@ app.use(cookieParser());
 
 
 
-// app.use(cors());//是否跨域
+app.use(cors());//是否跨域
 
 app.use('/', renders);
 app.use('/', pages);

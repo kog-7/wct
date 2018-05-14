@@ -92,10 +92,22 @@ let combine=function(){
       return;
     }
 
+    if(!wctfileObject){
+      utils.noLog(`must have combine  object in wctfile`);
+      reject();
+      return;
+    }
+
     var outWctObject=null;
     if(value&&(value in wctfileObject)){
       wctfileObject=wctfileObject[value];
     }
+    else{
+      utils.noLog(`${value} is not in combine object`);
+      reject();
+      return;
+    }
+
 
 
 

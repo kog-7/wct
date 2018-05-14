@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.2.15",
+  "version": "2.2.17",
   "description": "manage components,commands,scaffolding,useful files local",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,8 @@
     "browser-sync": "^2.23.6",
     "chalk": "^2.3.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "cross-spawn": "^6.0.5",
     "debug": "~2.6.9",
     "exec-series": "^1.0.3",
     "express": "^4.15.5",
@@ -24,6 +26,7 @@
     "get-port": "^3.2.0",
     "inquirer": "^5.1.0",
     "micromatch": "^3.1.10",
+    "mime": "^2.3.1",
     "morgan": "~1.9.0",
     "opn": "^5.3.0",
     "pug": "^2.0.3",

@@ -5,7 +5,7 @@ let nodepath=require("path");
 let promise_infoStore=require("../../services/promise_infoStore.js");
 let inquirer=require('inquirer');
 const exec = require('child_process').exec;
-
+const spawn=require('cross-spawn');
 
 
 let lib=function(){
@@ -28,21 +28,9 @@ let lib=function(){
         };
 
 
-        let execOb=exec(`node ${nodepath.join(__dirname,'./node/bin/www')} ${path} ${browser}`,function(err,msgOut,errOut){
-          if(err){
-            console.log(err);
-          }
-          if(msgOut){
-            console.log(msgOut);
-          }
-          if(errOut){
-            console.log(errOut);
-          }
-
-        });
-
-        execOb.stdout.on('data', function(data) {
-            console.log(data);
+        let execOb=spawn(`node`,[`bin/www`,`${path}`,`${browser}`],{cwd:`${nodepath.join(__dirname,'./node')}`,stdio: 'inherit'});
+        execOb.on('close', (code) => {
+          console.log(`exited with ${code}`);
         });
 
 
