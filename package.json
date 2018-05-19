@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.2.17",
+  "version": "2.2.18",
   "description": "manage components,commands,scaffolding,useful files local",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

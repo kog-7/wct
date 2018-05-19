@@ -1,14 +1,14 @@
 const fs=require("fs-extra");
 const utils=require("../../utils.js");
-let data = require("../../data.js");
+// let data = require("../../data.js");
 let nodepath=require("path");
 let promise_infoStore=require("../../services/promise_infoStore.js");
 let inquirer=require('inquirer');
 
-let remove=function(){
-  let {cmdStore}=data;
-  let {content}=cmdStore;
-  let {cmd,arg}=content;
+let remove=function(data){
+  // let {cmdStore}=data;
+  // let {content}=cmdStore;
+  let {cmd,arg}=data;
   let value=cmd[1],cmdType=cmd[0];
 
   return new Promise((resolve,reject)=>{

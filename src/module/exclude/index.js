@@ -1,6 +1,6 @@
 const fs=require("fs-extra");
 const utils=require("../../utils.js");
-let data = require("../../data.js");
+// let data = require("../../data.js");
 let nodepath=require("path");
 let promise_infoStore=require("../../services/promise_infoStore.js");
 

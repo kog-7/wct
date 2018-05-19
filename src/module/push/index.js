@@ -1,6 +1,6 @@
 const fs=require("fs-extra");
 const utils=require("../../utils.js");
-let data = require("../../data.js");
+// let data = require("../../data.js");
 let nodepath=require("path");
 let inquirer=require('inquirer');
 let promise_parseObjectResource=require("../../services/promise_parseObjectResource.js");
@@ -10,14 +10,14 @@ const vm=require('vm');
 let argsHandle=require('./argsHandle.js');
 
 
-let push=function(){
+let push=function(data){
 
   let loop=utils.branch();
 
   return new Promise((resolve,reject)=>{//arg wctfile/object/url/cover
-    let {cmdStore}=data;
-    let {content}=cmdStore;
-    let {cmd,arg}=content;
+    // let {cmdStore}=data;
+    // let {content}=cmdStore;
+    let {cmd,arg}=data;
     let value=cmd[1],cmdType=cmd[0];
     let {cover=[false],exclude=[],des=[''],commit=[''],type=[null],append=[false],part=false,wrap=[false]}=arg;
     cover=cover[0];

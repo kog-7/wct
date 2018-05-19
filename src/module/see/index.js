@@ -1,14 +1,14 @@
 const fs=require("fs-extra");
 const utils=require("../../utils.js");
-let data = require("../../data.js");
+// let data = require("../../data.js");
 let nodepath=require("path");
 let promise_infoStore=require("../../services/promise_infoStore.js");
 let inquirer=require('inquirer');
 
-let pull=function(){
-  let {cmdStore}=data;
-  let {content}=cmdStore;
-  let {cmd,arg}=content;
+let pull=function(data){
+  // let {cmdStore}=data;
+  // let {content}=cmdStore;
+  let {cmd,arg}=data;
   let value=cmd[1],cmdType=cmd[0];
   let {wrap,rename,cover=false,filter=[],f=[]}=arg;
   filter=filter[0]||f[0];

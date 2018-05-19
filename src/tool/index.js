@@ -1,5 +1,5 @@
 let fs = require("fs-extra");
-let data = require("../data.js");
+
 let nodepath=require("path");
 let utils=require('../utils.js');
 let inquirer=require('inquirer');
@@ -83,14 +83,14 @@ to=nodepath.join(to,nodepath.basename(copy));
 
 };
 
-let tool = () => {
-  let { cmdStore } = data;
-  let { content } = cmdStore;
+let tool = (data) => {
+  // let { cmdStore } = data;
+  // let { content } = cmdStore;
   return new Promise((resolve, reject) => {
-    let out=typeAction(content);
+    let out=typeAction(data);
     if(out){
       if(out.type==="remove"){
-        inquirer.prompt([{name:'confirm',choices:['yes','no'],type:'input',message:`are you sure to remove ${content}?yes/no`}]).then((ans)=>{
+        inquirer.prompt([{name:'confirm',choices:['yes','no'],type:'input',message:`are you sure to remove ${data}?yes/no`}]).then((ans)=>{
           if(ans.confirm==='yes'){
             utils.yesLog(`waiting...`);
             remove(out.content,resolve,reject);
@@ -105,7 +105,7 @@ let tool = () => {
       }
     }
     else if(out===false){
-      create(content,resolve,reject);
+      create(data,resolve,reject);
     }
   });
 };
