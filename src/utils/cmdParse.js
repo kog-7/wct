@@ -15,7 +15,7 @@ let type=(arr)=>{
 
 let parse=(arr)=>{
   let lg=arr.length;
-  let cmd=arr.slice(0,2),totalArg=arr.slice(2);
+  let cmd=arr.slice(0),totalArg=arr.slice(1);//只要有第一个-开始才算arg开始
   let arg={};
   let lastAttr=null;
 

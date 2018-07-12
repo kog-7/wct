@@ -182,7 +182,7 @@ wct see exclude
 //remove dir
 ...somedir > wct rm:a/b
 // copy paster
-...somedir > wct copy:./a=to:./c
+...somedir > wct copy:./a to:./c -exclude **/node_modules
 ```
 
 ### exec command

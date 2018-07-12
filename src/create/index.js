@@ -2,7 +2,7 @@ let utils=require("../utils.js");
 let nodepath=require("path");
 
 
-let create=(data)=>{
+let create=()=>{
 
   let path=nodepath.join(utils.cwd,'wctfile.js');
   let dir=nodepath.basename(utils.cwd);

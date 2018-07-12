@@ -1,11 +1,13 @@
 const fs=require("fs-extra");
 const utils=require("../../utils.js");
-// let data = require("../../data.js");
+let data = require("../../data.js");
 let nodepath=require("path");
 
-let config=function(data){
+let config=function(){
   return new Promise((resolve,reject)=>{
-    let {cmd,arg}=data;
+    let {cmdStore}=data;
+    let {content}=cmdStore;
+    let {cmd,arg}=content;
     let value=utils.absPath(cmd[1]);
     let loop=utils.branch();
     let nowConfigPath=nodepath.join(__dirname,"../../../config.json");

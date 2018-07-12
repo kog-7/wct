@@ -4,7 +4,6 @@ let fs=require("fs-extra");
 let nodepath=require("path");
 
 
-
 //data控制整个
 
 let data={
@@ -17,12 +16,13 @@ let data={
       else{
         let type=cmdParse.type(arg);
         let res=null;
-        if(type==='multiple'){
           res=cmdParse.parse(arg);
-        }
-        else if(type==='1'){
-          res=arg[0];
-        }
+        // if(type==='multiple'){
+        //   res=cmdParse.parse(arg);
+        // }
+        // else if(type==='1'){
+        //   res=arg[0];
+        // }
         let cmdStore= {
           type,content:res
         }

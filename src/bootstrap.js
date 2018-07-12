@@ -1,15 +1,15 @@
-// let data=require('./data.js');
+let data=require('./data.js');
 let utils=require("./utils.js");
 let modules=require('./module/index.js');
 let create=require('./create/index.js');
 let tool=require('./tool/index.js');
 
 
-let bootstrap=(data)=>{
+let bootstrap=()=>{
   let {cmdStore}=data;
   let {type,content}=cmdStore;
   if(type==='0'){
-    create(content).then(()=>{
+    create().then(()=>{
       utils.yesLog('wctfile.js is created');
       return;
     })
@@ -17,25 +17,38 @@ let bootstrap=(data)=>{
       utils.noLog(err);
     })
   }
-  else if(type==='1'){
-    tool(content).then(()=>{
-      // utils.yesLog('config task is done');
-    })
-    .catch((err)=>{
-      utils.noLog(err);
-    })
-  }
-  else if(type==='multiple'){
+  // else if(type==='1'){
+  //   tool().then(()=>{
+  //     utils.yesLog('config task is done');
+  //   })
+  //   .catch((err)=>{
+  //     utils.noLog(err);
+  //   })
+  // }
+  else if(type==='multiple'||type==='1'){
+
     let {cmd,arg}=content;
     let [key,value]=cmd;//cmd是一个2位数组
+
     if(data.feature.indexOf(key)===-1){
-      utils.noLog(`${key} cmd is not supported`);
+      // utils.noLog(`${key} cmd is not supported`);
+      tool().then(()=>{
+        utils.yesLog('config task is done');
+      })
+      .catch((err)=>{
+        utils.noLog(err);
+      })
       return;
     }
-    modules[key](content).then(()=>{
-        utils.yesLog(`${key} ${value} task is done`);
-    });
+    else{
+      modules[key](value).then(()=>{
+
+
+      });
+    }
+
   }
+
 };
 
 

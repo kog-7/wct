@@ -1,6 +1,6 @@
 const fs=require("fs-extra");
 const utils=require("../../utils.js");
-// let data = require("../../data.js");
+let data = require("../../data.js");
 let nodepath=require("path");
 let promise_infoStore=require("../../services/promise_infoStore.js");
 
@@ -11,8 +11,10 @@ let feature=[
 'cmd'
 ];
 
-let exec=function(data){
-  let {cmd,arg}=data;
+let exec=function(){
+  let {cmdStore}=data;
+  let {content}=cmdStore;
+  let {cmd,arg}=content;
   let value=cmd[1],cmdType=cmd[0];
   let {nowrap,rename,cover=[false],type=[]}=arg;
   cover=cover[0];
