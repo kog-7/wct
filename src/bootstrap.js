@@ -30,7 +30,7 @@ let bootstrap=()=>{
     let {cmd,arg}=content;
     let [key,value]=cmd;//cmd是一个2位数组
 
-    if(data.feature.indexOf(key)===-1){
+    if(data.feature.indexOf(key)===-1){//暂时只做排除法
       // utils.noLog(`${key} cmd is not supported`);
       tool().then(()=>{
         utils.yesLog('config task is done');
@@ -43,7 +43,10 @@ let bootstrap=()=>{
     else{
       modules[key](value).then(()=>{
 
-
+        // console.log()
+      })
+      .catch((err)=>{
+        // console.log(err);
       });
     }
 

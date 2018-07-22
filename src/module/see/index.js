@@ -15,7 +15,14 @@ let pull=function(){
   return new Promise((resolve,reject)=>{
     promise_infoStore()//value是lib名字
     .then((config)=>{
-      if(value==='*'){
+
+    if (value === '*') {
+      utils.noLog('please use wct see all,* is not unavailable');
+      reject();
+      return;
+    }
+
+      if(value==="all"){
         let path=config.path;
         fs.readdir(path,function(err,files){
           if(err){
@@ -36,7 +43,7 @@ let pull=function(){
                   console.log(`lib:${fil}  description:${obj.description||'no des'}  last action:${JSON.stringify(obj.log[obj.log.length-1])}`);
                 })
                 .catch((err)=>{
-                  utils.noLog(err);
+                  console.log(`lib:${fil}`);
                 })
             }
             resolve();
@@ -64,7 +71,7 @@ let pull=function(){
           resolve();
       }
       else{
-        utils.noLog(`can use wct see * or wct see exclude`);
+        utils.noLog(`can use wct see all or wct see exclude`);
         reject();
       }
     })

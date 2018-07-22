@@ -82,7 +82,8 @@ let run=function(router){
             if(typeof log==="string"){log=[];}
             resolve([{description,log:log[log.length-1],done:true}]);
           }).catch(function(err){
-            reject(err);
+             resolve([{description:"",log:"",done:true}]);
+            // reject(err);
           })
         }
       });

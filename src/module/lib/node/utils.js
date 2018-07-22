@@ -147,7 +147,7 @@ let quitSame=(arr1)=>{
 
 
 let concatExclude=(key,exclude,globalExclude)=>{
-  let all=globalExclude['*'];
+  let all=globalExclude['*','all'];
   let keyEx=null;
   if(key){keyEx=globalExclude[key];}
   let out=[];

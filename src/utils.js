@@ -147,11 +147,12 @@ let quitSame=(arr1)=>{
 
 
 let concatExclude=(key,exclude,globalExclude)=>{
-  let all=globalExclude['*'];
+  let all=globalExclude['all'];//* is not used in mac
+  let fixAll=globalExclude['*'];
   let keyEx=null;
   if(key){keyEx=globalExclude[key];}
   let out=[];
-  [exclude,keyEx,all].forEach((obj)=>{
+  [exclude, keyEx, all, fixAll].forEach((obj) => {//把所有的exclude合并，默认的，all和fixall都有，fixall为修复*
     if(Array.isArray(obj)){
       out=out.concat(obj);
     }

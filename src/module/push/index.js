@@ -3,6 +3,7 @@ const utils=require("../../utils.js");
 let data = require("../../data.js");
 let nodepath=require("path");
 let inquirer=require('inquirer');
+let chalk=require('chalk');
 let promise_parseObjectResource=require("../../services/promise_parseObjectResource.js");
 let promise_infoStore=require("../../services/promise_infoStore.js");
 let promise_log=require("../../services/promise_log.js");
@@ -25,8 +26,10 @@ let push=function(){
     wrap=wrap[0];
     cover=utils.toBoolean(cover);
     append=utils.toBoolean(append);
-
-
+    if(!value||value[0]==='-'){
+      value=nodepath.basename(utils.cwd);
+    }
+   
     let createResource=function(obj){
       return new Promise((res,rej)=>{
 
@@ -37,8 +40,6 @@ let push=function(){
         let rename=null;
         let {types,part:partHandle}=argsHandle;
         let typeIndex=utils.objectArrayInclude(types,type[0],'key');
-
-
 
         let  parseObject=(obj,rename)=>{
 
@@ -117,7 +118,12 @@ let push=function(){
 
 
     if(utils.includeKeys(arg,['url'])===false){
-      inquirer.prompt([{name:'confirm',choices:['yes','no'],type:'input',message:`are you sure to push current project : ${utils.cwd}?yes/no`}]).then((ans)=>{
+      inquirer.prompt([{
+          name: 'confirm',
+          choices: ['yes', 'no'],
+          type: 'input',
+          message: `are you sure to push current project with name ${chalk.green(value)} : ${utils.cwd}?yes/no`
+        }]).then((ans) => {
         if(ans.confirm==='yes'){
           loop
           .get(promise_infoStore,value)//查询value库的相关信息

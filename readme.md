@@ -17,13 +17,13 @@ npm install wct -g
 //base use
 
 wct config C:\codeStore    //storage warehouse
-wct exclude * -doc **/node_modlues   //exclude dir or file in all push command
+wct exclude all -doc **/node_modlues   //exclude dir or file in all push command
 
 ...somedir > wct push component1  //push your code
 ...somedir > wct pull component1  //pull your code
 
 //open server to view all libs in browser
-wct lib *
+wct lib all
 
 // special handle,special treatment upload code
 wct exec q-react -type webq
@@ -58,10 +58,10 @@ exclude use micromatch to filte path   [micromatch](https://www.npmjs.com/packag
 
 
 ```js
-// use * for all the upload.it only exclude some dir when push react-material if use wct exclude react-material -doc ..
+// use all for all the upload.it only exclude some dir when push react-material if use wct exclude react-material -doc ..
 //not push node_modlue  and .git dir
 
-wct exclude * -doc **/node_modlues someDir/*.md
+wct exclude all -doc **/node_modlues someDir/*.md
 
 ```
 
@@ -75,6 +75,9 @@ wct exclude * -doc **/node_modlues someDir/*.md
 ```js
 //push current dir and named react-redux-material then upload
 ..somedir > wct push react-redux-material
+
+//push current dir and named dir1
+...dir1 > wct push 
 
 // use special dir to upload
 ..somedir > wct push react-redux -url ./dist
@@ -134,10 +137,10 @@ wct rename react-redux -rename react-redux-material
 
 
 ```js
-//can use wct lib * -browser chrome  
+//can use wct lib all -browser chrome  
 // to point browser open
 
-wct lib *
+wct lib all
 
 ```
 
@@ -151,10 +154,10 @@ wct lib *
 ### see
 
 ```js
-//see all * in storage warehouse
-wct see *
-// see some *
-wct see * -f react-redux
+//see all  in storage warehouse
+wct see all
+// see some 
+wct see all -f react-redux
 //see exclude
 wct see exclude
 ```
@@ -179,6 +182,8 @@ wct see exclude
 ```js
 //create dir a/b/c in current dir
 ...somedir > wct a/b/c/
+//clean current dir content file and idr
+...somedir > wct clean  
 //remove dir
 ...somedir > wct rm:a/b
 // copy paster

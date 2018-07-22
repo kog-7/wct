@@ -4,11 +4,15 @@ let nodepath=require("path");
 let utils=require('../utils.js');
 let inquirer=require('inquirer');
 
+
+
 let typeAction=(content)=>{
   //只是以:为分隔符来区分相关内容
   let ind=content.indexOf(':');
   if(ind===-1){
-    return false;
+    return {
+      type:content
+    }
   }
   else{
     let lf=content.slice(0,ind),rt=content.slice(ind+1);
@@ -57,7 +61,20 @@ let remove=(content,resolve,reject)=>{
   });
 }
 
+let cleanDir=()=>{
 
+fs.readdir(utils.cwd,(err,files)=>{
+if(err){console.log(err);return;}
+files.forEach((fil)=>{
+  let url = nodepath.join(utils.cwd, fil);
+fs.removeSync(url);
+console.log(`${url} is deleted`);
+});
+});
+
+console.log('done!');
+
+};
 
 let copyPaste=(copy,to,arg,resolve,reject)=>{
   // to=nodepath.join(to,nodepath.basename(copy));
@@ -95,8 +112,6 @@ let tool = () => {
   return new Promise((resolve, reject) => {
     let out=typeAction(key);
 
-
-
     if(out){
       if(out.type==="rm"){
         inquirer.prompt([{name:'confirm',choices:['yes','no'],type:'input',message:`are you sure to remove ${key}?yes/no`}]).then((ans)=>{
@@ -109,6 +124,20 @@ let tool = () => {
           }
         });
       }
+      else if(out.type==='clean'){
+
+            inquirer.prompt([{name:'confirm',choices:['yes','no'],type:'input',message:`are you sure to clean current dir?yes/no`}]).then((ans)=>{
+          if(ans.confirm==='yes'){
+            utils.yesLog(`waiting...`);
+            cleanDir();
+          }
+          else{
+            return;
+          }
+        });
+
+
+      }
       else if(out.type==="copy"){//使用wct copy:./a to:./b -exclude **/a.js来做
       let toObj=typeAction(value);
       if(toObj&&toObj.type==='to'){
@@ -119,9 +148,12 @@ let tool = () => {
         copyPaste(copyUrl,toUrl,arg,resolve,reject);
       }
     }
+    else{
+      create(key, resolve, reject);
+    }
   }
   else if(out===false){
-    create(key,resolve,reject);
+    create(key,resolve,reject);//not exit this situation,follow delete
   }
 
 });

@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors=require('cors');
-
+console.log(999999999999)
 var renders = require('./routes/renders/index');
 var pages = require('./routes/pages/index');
 // var mock = require('./routes/mock/index');
@@ -43,7 +43,6 @@ skip:function(req,res){
 }
 }));
 //结束打日志
-
 
 
 

@@ -19,8 +19,13 @@ let lib=function(){
 
     promise_infoStore()//value是lib名字
     .then((config)=>{
-
       if(value==='*'){
+        utils.noLog('please use wct lib all,* is not unavailable');
+        reject();
+        return;
+      }
+
+      if(value==="all"){
         let path=config.path;
         if(!path){
           utils.noLog(`no config store path or store path is not variable`);
@@ -37,7 +42,7 @@ let lib=function(){
 
       }
       else {
-        utils.noLog(`${value} can't be use ,use * to open`);
+        utils.noLog(`${value} can't be use ,use all to open`);
         reject();
       }
 

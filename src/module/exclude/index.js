@@ -11,7 +11,7 @@ let exclude=function(){
   let {cmd,arg}=content;
   let value=cmd[1],cmdType=cmd[0];
   // let {cover}=arg;
-//value如果微*表示所有库都不能包含。。
+//value如果微all表示所有库都不能包含。。
   let {doc}=arg;//doc包括文件和文件夹
 // let excludeDir=dir||directory;
 
@@ -21,6 +21,14 @@ let exclude=function(){
       reject(`you need use -doc to express which dir or file you want to exclude`);
       return;
     }
+
+    if (value === '*') {
+      utils.noLog('please use wct exclude all -doc ..,* is not unavailable');
+      reject();
+      return;
+    }
+
+
     promise_infoStore()
     .then((config)=>{
       let path=config.configUrl;
@@ -31,7 +39,7 @@ let exclude=function(){
         exclude[value]=doc;
         fs.writeJson(path,obj)
         .then(()=>{
-          utils.yesLog(`you exclude ${doc} when you push ${value},if doc is *,all lib will exclude ${doc}`);
+          utils.yesLog(`you exclude ${doc} when you push ${value},if doc is all,all lib will exclude ${doc}`);
           resolve();
         })
         .catch((err)=>{
@@ -45,7 +53,7 @@ let exclude=function(){
         obj.exclude[value]=doc;
         fs.writeJson(path,obj)
           .then(()=>{
-            utils.yesLog(`you exclude ${doc} when you push ${value},if doc is *,all lib will exclude ${doc}`);
+            utils.yesLog(`you exclude ${doc} when you push ${value},if doc is all,all lib will exclude ${doc}`);
             resolve();
           })
           .catch((err)=>{
