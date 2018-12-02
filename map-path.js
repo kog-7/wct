@@ -1,6 +1,6 @@
 let nodepath = require("path");
 
-let cwd = process.cwd();
+let cwd = __dirname;
 
 module.exports = {
   Utils: nodepath.join(cwd, "utils"),

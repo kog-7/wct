@@ -1,7 +1,10 @@
 {
   "name": "wct",
-  "version": "2.3.0",
-  "description": "",
+  "version": "2.3.6",
+  "description": "custom commander",
+  "keywords": [
+    "commander"
+  ],
   "main": "index.js",
   "bin": {
     "wct": "./index.js"
@@ -11,7 +14,7 @@
   },
   "author": "kog-7",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "cross-spawn": "^6.0.5",
