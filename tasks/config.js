@@ -10,8 +10,10 @@ function config(url) {
     newUrl = nodepath.join(cwd, url);
   }
   return new Promise((resolve, reject) => {
+
     fs.writeJson(configOj.configUrl, { path: newUrl })
       .then(() => {
+      
         fs.ensureDirSync(newUrl);
         fs.ensureDirSync(nodepath.join(newUrl, "cmds"));
         fs.ensureDirSync(nodepath.join(newUrl, "tasks"));

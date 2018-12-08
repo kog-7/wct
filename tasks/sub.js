@@ -5,7 +5,9 @@ let fs = require("fs-extra");
 let utils = require("map-path")("Utils");
 let inquirer = require("inquirer");
 let configUrl = config.configUrl;
-
+const spawn = require('cross-spawn');
+var commandExists = require('command-exists');
+const rimraf = require('rimraf');
 let readConfig = function() {
   return fs.readJson(configUrl);
 };
@@ -14,6 +16,7 @@ let readCmds = function() {
   let { store } = this;
   let configUrl = store.config.path;
   let cmdUrl = nodepath.join(configUrl, "cmds");
+
   return new Promise((resolve, reject) => {
     fs.readdir(cmdUrl, (err, files) => {
       if (err) {
@@ -29,6 +32,7 @@ let exportCmds = function() {
   let { store } = this;
   let configUrl = store.config.path;
   let { data: files } = this;
+
   return new Promise((resolve, reject) => {
     let out = [];
     if (Array.isArray(files)) {
@@ -60,7 +64,10 @@ let exportCmds = function() {
         });
       });
     }
-
+    if (out.length === 0) {
+      resolve(out);
+      return;
+    }
     utils
       .branch(out)
       .then(({ store }) => {
@@ -77,6 +84,9 @@ let exportCmds = function() {
   });
 };
 
+
+
+
 let validCommand = function(commandName, url) {
   let { store, data } = this;
   let configUrl = store.config.path;
@@ -88,7 +98,7 @@ let validCommand = function(commandName, url) {
           {
             name: "confirm",
             type: "input",
-            message: `${commandName} is exit , cover it?`
+            message: `${commandName} is exit , cover it? yes/no`
           }
         ])
         .then(ans => {
@@ -105,20 +115,98 @@ let validCommand = function(commandName, url) {
   });
 };
 
+
+
+
+
+
+
 let validContent = function(commandName, url) {
   return new Promise((resolve, reject) => {
+
     fs.stat(url, (err, stats) => {
+    
       if (err) {
+        // console.log(err,999)
         reject(err);
         return;
       }
-      if (!stats.isFile()) {
-        reject(`task ${url} must file`);
+      if (!stats.isFile()&&!stats.isDirectory()) {
+        reject(`task ${url} must file or dir`);
         return;
       }
       resolve();
     });
   });
+};
+
+
+let createTask = function(commandName, url) {
+  let { store } = this;
+  let configUrl = store.config.path;
+
+  //url must file
+  return new Promise((resolve, reject) => {
+    let copyUrl = nodepath.join(configUrl, "tasks", commandName, "index.js");
+    fs.copy(url, copyUrl)
+      .then(() => {
+        resolve();
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+let createTaskByDir=function(commandName,url){
+ let { store } = this;
+  let configUrl = store.config.path;
+  //url must file
+  return new Promise((resolve, reject) => {
+
+    let copyUrl = nodepath.join(configUrl, "tasks", commandName);
+    let rootFile = nodepath.join(url,'index.js');
+    let rootStates=fs.statSync(rootFile);
+    if(!rootStates.isFile()){
+      reject('no index.js');
+      return;
+    }
+
+    fs.copy(url, copyUrl)
+      .then(() => {
+        try{
+        let stats=fs.statSync(nodepath.join(copyUrl,'package.json'));
+        if(stats.isFile()){
+          utils.consoleYes('npm install start');
+        spawn.sync('rm',['-rf','./node_modules'],{cwd:copyUrl});
+      rimraf.sync(nodepath.join(copyUrl,'node_modules'));
+// console.log(99)
+
+        
+
+        // if (commandExists.sync('yarnpkg')) {
+        //   spawn.sync('yarnpkg', [ 'add'], { stdio: 'inherit',cwd: copyUrl });
+        // } else {
+          spawn.sync('npm', ['install', '--save',
+        '--save-exact',
+        '--loglevel',
+        'error'], { stdio: 'inherit',cwd: copyUrl });
+        // }
+          
+          
+        }
+        }
+        catch(e){
+         
+        }
+        resolve();
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+
+
 };
 
 let createCmd = function(commandName, optionArr = []) {
@@ -137,13 +225,18 @@ let createCmd = function(commandName, optionArr = []) {
       action:function(arg,options){
       let url=nodepath.join('${newConfigUrl}','tasks',"${commandName}","index.js");
       return new Promise((resolve,reject)=>{
-        
+    
       try{
-        require(url)(arg,options)
-        .then((data)=>{
-          resolve(data);
-        })
+        let out=require(url)(arg,options);
+        if(typeof out==="object"&&typeof out.then==="function"){
+          out.then((data)=>{
+            resolve(data);
+          })
+          .catch((err)=>{
+            reject(err);
+          })
 
+        }
       }
       catch(e){
         reject(e);
@@ -167,30 +260,26 @@ let createCmd = function(commandName, optionArr = []) {
   });
 };
 
-let createTask = function(commandName, url) {
-  let { store } = this;
-  let configUrl = store.config.path;
-  //url must file
-  return new Promise((resolve, reject) => {
-    let copyUrl = nodepath.join(configUrl, "tasks", commandName, "index.js");
-    fs.copy(url, copyUrl)
-      .then(() => {
-        resolve();
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
-};
+
+
+
+
+
+
 
 function sub(arg, allOption) {
-  let { file, option } = allOption;
+  let { file, option,dir} = allOption;
   let commandName = arg;
+  if(dir===true){dir='./';}
   return new Promise((resolve, reject) => {
     if (!commandName) {
       reject(`must sub a command name`);
       return;
     }
+
+if(typeof file==="string"){
+
+
     let arr = [];
 
     if (typeof option === "string") {
@@ -204,8 +293,9 @@ function sub(arg, allOption) {
         { callback: exportCmds },
         { callback: validCommand, props: [commandName, arr] },
         { callback: validContent, props: [commandName, file] },
+        { callback: createTask, props: [commandName, file] },
         { callback: createCmd, props: [commandName, arr] },
-        { callback: createTask, props: [commandName, file] }
+        
       ])
       .then(data => {
         resolve(`${commandName} is configed`);
@@ -215,6 +305,39 @@ function sub(arg, allOption) {
           utils.consoleNo(err);
         }
       });
+}
+else if(typeof dir==="string"){
+
+  let arr = [];
+
+    if (typeof option === "string") {
+      arr = option.split("+");
+    }
+
+    utils
+      .branch([
+        { callback: readConfig, name: "config" },
+        { callback: readCmds },
+        { callback: exportCmds },
+        { callback: validCommand, props: [commandName, arr] },
+        { callback: validContent, props: [commandName, dir] },
+        { callback: createTaskByDir, props: [commandName, dir] },
+        { callback: createCmd, props: [commandName, arr] },
+        
+      ])
+      .then(data => {
+        resolve(`${commandName} is configed`);
+      })
+      .catch(err => {
+        if (err) {
+          utils.consoleNo(err);
+        }
+      });
+
+}
+
+
+
   });
 }
 

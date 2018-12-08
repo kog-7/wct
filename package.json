@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.3.6",
+  "version": "2.4.0",
   "description": "custom commander",
   "keywords": [
     "commander"
@@ -10,7 +10,8 @@
     "wct": "./index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
   },
   "author": "kog-7",
   "license": "MIT",
@@ -20,6 +21,8 @@
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.1",
     "inquirer": "^6.2.1",
+    "command-exists": "^1.2.8",
+    "rimraf": "^2.6.2",
     "map-path": "^1.0.5"
   }
 }
