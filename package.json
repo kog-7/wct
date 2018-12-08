@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "description": "custom commander",
   "keywords": [
     "commander"
@@ -23,6 +23,6 @@
     "inquirer": "^6.2.1",
     "command-exists": "^1.2.8",
     "rimraf": "^2.6.2",
-    "map-path": "^1.0.5"
+    "map-path": "^1.0.6"
   }
 }

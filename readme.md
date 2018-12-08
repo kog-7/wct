@@ -1,6 +1,6 @@
 # wct
 
-custom cmd
+custom commands && store commands && run commands in your work
 
 ![](https://img.shields.io/npm/v/wct.svg?style=flat)
 
@@ -13,11 +13,12 @@ npm install wct -g
 ## example
 
 ```js
-//config dir,which store cmd tasks
+//where the cmds store
 wct config ./somedir
 
-//subscribe task,rm.js is task detail file
-wct sub rm -f ./rm.js -o e=exclude+i=include
+//subscribe task,-o config custom cmd option ,-d config cmd source dir(if have package.json,will install dependencies auto),-f config cmd source file.
+wct sub rm -d ./dir -o e=exclude&i=include
+wct sub rm -f ./rm.js -o e=exclude&i=include
 
 //run task
 wct rm ./test -e node_modules
@@ -30,10 +31,7 @@ wct --help
 ## task file
 
 ```
-//if there are some deps in task just like fs-extra and so on,must install deps in dir which in 'wct config ./somedir'
-
-module.exports=function(arg,options){//arg just like ./test in  'wct rm ./test -e node_modules'  options.exclude get node_modules
-
+module.exports=function(arg,options){//arg just like ./test in  'wct rm ./test -e node_modules'  options.exclude  node_modules
 
 return new Promise((resolve,reject)=>{
 // detail task
