@@ -1,6 +1,6 @@
 {
   "name": "wct",
-  "version": "2.4.2",
+  "version": "2.4.4",
   "description": "custom commander",
   "keywords": [
     "commander"
@@ -15,6 +15,14 @@
   },
   "author": "kog-7",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kog-7/wct.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kog-7/wct/issues"
+  },
+  "homepage": "https://github.com/kog-7/wct#readme",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.19.0",

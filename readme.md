@@ -17,11 +17,11 @@ npm install wct -g
 wct config ./somedir
 
 //subscribe task,-o config custom cmd option ,-d config cmd source dir(if have package.json,will install dependencies auto),-f config cmd source file.
-wct sub rm -d ./dir -o e=exclude&i=include
-wct sub rm -f ./rm.js -o e=exclude&i=include
+wct sub rm -o exclude="remove exclude dir",include     //use current cwd directory path
+wct sub rm ./remove exclude="remove ..",include    //use special directory path 
 
 //run task
-wct rm ./test -e node_modules
+wct rm ./test --exclude node_modules //use --exclude or -e, -e node_modules,cache
 
 //help
 wct --help
@@ -31,8 +31,7 @@ wct --help
 ## task file
 
 ```
-module.exports=function(arg,options){//arg just like ./test in  'wct rm ./test -e node_modules'  options.exclude  node_modules
-
+module.exports=function(args,options){  //args:string[],options.exclude:string[]
 return new Promise((resolve,reject)=>{
 // detail task
 
