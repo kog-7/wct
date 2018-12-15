@@ -173,6 +173,9 @@ let parse = function() {
       if(typeof config==="object"){
         utils.consoleYes(`store in ${config.path}`);
       }
+      else{
+         utils.consoleYes(`no config path`);
+      }
     });
 
 
