@@ -153,7 +153,7 @@ let parse = function() {
 
 
   program
-    .command("config [args]")
+    .command("config [args...]")
     .action(function(args=[]) {
       let url=args[0];
       require("map-path")("Tasks/config.js")(url)
